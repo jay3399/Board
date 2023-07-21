@@ -114,12 +114,6 @@ public class BoardController {
     }
 
 
-    private static boolean searchExist(BoardSearch boardSearch) {
-        return StringUtils.hasText(boardSearch.getTitle()) || StringUtils.hasText(
-            boardSearch.getContent()) || StringUtils.hasText(boardSearch.getNickname())
-            || StringUtils.hasText(boardSearch.getComplex());
-    }
-
 
     @GetMapping("/boards/{boardId}")
     public String getBoardV3WithRedisCount(@PathVariable("boardId") Long boardId, Model model,
@@ -203,7 +197,7 @@ public class BoardController {
         }
 
         // 컨트롤러단과 , 서비스의 결합을 최대한 느슨하게해야한다
-        // 컨트롤러의 파라미터를 그대로 서비스단으로 넘기면 form객체 , 그러면 컨트롤러단에 의지를 하는것 .
+        // 컨트롤러의 파라미터를 그대로 서비스단으로 넘기면 form객체 ,컨트롤러단에 의지를 하는것 .
         // 특히 서비스단은 최대한 순수하게 유지를 해줘야한다  , 의존 최대한 x
         // 파라미터 개수또한 최대한 제한한다 , 유지보수 관점
 
@@ -341,6 +335,13 @@ public class BoardController {
         reportValues.add(new CategoryValue("R", "규정위반"));
 
         return reportValues;
+    }
+
+
+    private static boolean searchExist(BoardSearch boardSearch) {
+        return StringUtils.hasText(boardSearch.getTitle()) || StringUtils.hasText(
+            boardSearch.getContent()) || StringUtils.hasText(boardSearch.getNickname())
+            || StringUtils.hasText(boardSearch.getComplex());
     }
 
     private static String getIpAddress(HttpServletRequest req) {

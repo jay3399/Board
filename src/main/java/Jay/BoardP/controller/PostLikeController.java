@@ -3,6 +3,8 @@ package Jay.BoardP.controller;
 
 import Jay.BoardP.controller.dto.User;
 import Jay.BoardP.service.PostLikeService;
+import java.io.PrintWriter;
+import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -21,7 +23,7 @@ public class PostLikeController {
     @PostMapping("/{boardId}/postLike")
     @ResponseBody
     public Boolean postLike(@PathVariable Long boardId, @AuthenticationPrincipal User user,
-        RedirectAttributes redirectAttributes) {
+        RedirectAttributes redirectAttributes, HttpServletResponse response) {
         Long memberId = user.getId();
         return postLikeService.pushLikeButton(boardId, memberId);
     }

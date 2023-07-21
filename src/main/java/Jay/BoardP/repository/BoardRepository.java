@@ -59,7 +59,7 @@ public class BoardRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 
-    private final CheckCategory check;
+//    private final CheckCategory check;
 
 
     public BoardRepository(EntityManager em,
@@ -67,7 +67,7 @@ public class BoardRepository {
         this.em = em;
         this.adBoardRepository = springDataBoardRepository;
         this.jpaQueryFactory = new JPAQueryFactory(em);
-        this.check = checkCategory;
+//        this.check = checkCategory;
 
     }
 
@@ -99,7 +99,7 @@ public class BoardRepository {
         return adBoardRepository.findAll(pageable);
     }
 
-    public Page<Board> findAll(Pageable pageable, BoardSearch boardSearch) {
+    public Page<Board> findAll(Pageable pageable, BoardSearch boardSearch , CheckCategory check) {
 
         // 카테고리코드 x , 검색키워드만
 
@@ -150,7 +150,7 @@ public class BoardRepository {
 
     }
 
-    public Page<Board> findAll(Pageable pageable, BoardSearch boardSearch, String categoryCode) {
+    public Page<Board> findAll(Pageable pageable, BoardSearch boardSearch, String categoryCode , CheckCategory check) {
 
 
         String title = boardSearch.getTitle();

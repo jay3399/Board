@@ -43,6 +43,8 @@ public class BoardService {
 
     private final MemberRepository memberRepository;
 
+    private final CheckCategory checkCategory;
+
 
     @Transactional
     public Long addBoardV2(Long memberId,BoardPostDto boardPostDto) throws IOException {
@@ -137,7 +139,8 @@ public class BoardService {
 
         CheckCategory checkCategory = new CheckCategoryImpl();
 
-        Page<Board> allV4 = boardRepository.findAll(pageable, boardSearch, categoryCode);
+        Page<Board> allV4 = boardRepository.findAll(pageable, boardSearch, categoryCode,
+            checkCategory);
 
         return allV4.map(BoardListDto::from);
 
@@ -147,7 +150,7 @@ public class BoardService {
 
     public Page<BoardListDto> getBoardList(BoardSearch boardSearch, Pageable pageable) {
 
-        Page<Board> allV3 = boardRepository.findAll(pageable, boardSearch);
+        Page<Board> allV3 = boardRepository.findAll(pageable, boardSearch, checkCategory);
         return allV3.map(BoardListDto::from);
 
     }
