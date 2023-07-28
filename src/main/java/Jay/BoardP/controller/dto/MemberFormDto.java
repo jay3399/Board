@@ -13,6 +13,7 @@ import lombok.Setter;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Setter
 public class MemberFormDto {
 
     private Long id;

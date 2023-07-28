@@ -41,20 +41,30 @@ public class MemberController {
 
 
     @PostMapping("/signUp")
-    public String addMember(@Validated @ModelAttribute("memberFormDto") MemberFormDto memberFormDto,
+    public String addMember(@Validated@ModelAttribute("memberFormDto") MemberFormDto memberFormDto,
         BindingResult bindingResult) {
 
 
-        String code = String.valueOf(redisTemplate.opsForValue().get(memberFormDto.getEmail()));
+//        String code = String.valueOf(redisTemplate.opsForValue().get(memberFormDto.getEmail()));
+
+        String password = memberFormDto.getPassword();
+        String checkPassword = memberFormDto.getCheckPassword();
+        String nickname = memberFormDto.getNickname();
+
+        System.out.println("nickname = " + nickname);
+        System.out.println("checkPassword = " + checkPassword);
+        System.out.println("password = " + password);
+
 
         //비밀번호 재확인 검증
         if (!memberFormDto.getPassword().equals(memberFormDto.getCheckPassword())) {
             bindingResult.reject("checkPassword", "비밀번호가 일치하지 않습니다");
         }
+
         //이메일코드 인증
-        if (code == null || !code.equals(memberFormDto.getCode())) {
-            bindingResult.reject("checkCode", "이메일 인증번호가 일치하지 않습니다");
-        }
+//        if (code == null || !code.equals(memberFormDto.getCode())) {
+//            bindingResult.reject("checkCode", "이메일 인증번호가 일치하지 않습니다");
+//        }
 
         if (bindingResult.hasErrors()) {
             System.out.println("bindingResult = " + bindingResult);

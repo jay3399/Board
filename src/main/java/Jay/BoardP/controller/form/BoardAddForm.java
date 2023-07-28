@@ -1,6 +1,7 @@
 package Jay.BoardP.controller.form;
 
 import Jay.BoardP.controller.dto.BoardPostDto;
+import Jay.BoardP.controller.dto.User;
 import Jay.BoardP.domain.FileType;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +12,13 @@ import javax.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class BoardAddForm {
 
@@ -36,19 +40,19 @@ public class BoardAddForm {
     private String ipAddress;
     private Long userId;
 
-
-    @Builder
-    private BoardAddForm(String title, String content, List<MultipartFile> imageFiles,
-        List<MultipartFile> generalFiles , String categoryCode , String nickname , String ipAddress , String userId) {
-        this.title = title;
-        this.content = content;
-        this.imageFiles = (imageFiles != null) ? imageFiles : new ArrayList<>();
-        this.generalFiles = (generalFiles != null) ? generalFiles : new ArrayList<>();
-        this.categoryCode = categoryCode;
-        this.nickname = nickname;
-        this.ipAddress = ipAddress;
-        this.userId = Long.valueOf(userId);
-    }
+//
+//    @Builder
+//    private BoardAddForm(String title, String content, List<MultipartFile> imageFiles,
+//        List<MultipartFile> generalFiles , String categoryCode , String nickname , String ipAddress , String userId) {
+//        this.title = title;
+//        this.content = content;
+//        this.imageFiles = (imageFiles != null) ? imageFiles : new ArrayList<>();
+//        this.generalFiles = (generalFiles != null) ? generalFiles : new ArrayList<>();
+//        this.categoryCode = categoryCode;
+//        this.nickname = nickname;
+//        this.ipAddress = ipAddress;
+//        this.userId = Long.valueOf(userId);
+//    }
 
     public BoardPostDto createBoardPostDto() {
         Map<FileType, List<MultipartFile>> files = getAttachmentTypeListMap();
@@ -69,6 +73,12 @@ public class BoardAddForm {
         attachments.put(FileType.IMAGE, imageFiles);
         attachments.put(FileType.GENERAL, generalFiles);
         return attachments;
+    }
+
+    public void setInfo(User user, String ipAddress) {
+        this.userId = user.getId();
+        this.nickname = user.getNickname();
+        this.ipAddress = ipAddress;
     }
 
 

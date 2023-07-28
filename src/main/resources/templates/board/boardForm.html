@@ -49,6 +49,9 @@
         <input class="input-content" th:field="*{content}" type="text" th:errorclass="field-error">
       <div class="field-error" th:errors="*{content}"></div>
       </div>
+      <input th:field="*{ipAddress}" hidden="hidden">
+      <input th:field="*{nickname}" hidden="hidden">
+      <input th:field="*{userId}" hidden="hidden">
 
       <div>
       <input th:field="*{imageFiles}" type="file" multiple>

@@ -66,6 +66,8 @@ public class BoardService {
     @Transactional
     public Long addBoardV3(BoardPostDto boardPostDto) throws IOException {
 
+        System.out.println("boardPostDto = " + boardPostDto.getUserId());
+
         Member member = memberRepository.findMember(boardPostDto.getUserId());
 
         Board board = boardPostDto.createBoard(member);

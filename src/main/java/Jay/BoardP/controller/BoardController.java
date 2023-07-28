@@ -168,13 +168,11 @@ public class BoardController {
     public String boardForm(@ModelAttribute("boardForm") BoardAddForm boardAddForm,
         @AuthenticationPrincipal User user , HttpServletRequest request) {
 
-        String nickname = user.getNickname();
-        String ipAddress = getIpAddress(request);
-        Long id = user.getId();
+        boardAddForm.setInfo(user, getIpAddress(request));
 
-        request.setAttribute("nickname", nickname);
-        request.setAttribute("id", id);
-        request.setAttribute("ipAddress", ipAddress);
+        //boardAddForm.setNickname(user.getNickname());
+//        boardAddForm.setUserId(user.getId());
+//        boardAddForm.setIpAddress(getIpAddress(request));
 
 
         return "board/boardForm";
@@ -197,7 +195,7 @@ public class BoardController {
         }
 
         // 컨트롤러단과 , 서비스의 결합을 최대한 느슨하게해야한다
-        // 컨트롤러의 파라미터를 그대로 서비스단으로 넘기면 form객체 ,컨트롤러단에 의지를 하는것 .
+        // 컨트롤러의 파라미터를 그대로 서비스단으로 넘기면 form , 즉 컨트롤러단에 의지를 하는것 .
         // 특히 서비스단은 최대한 순수하게 유지를 해줘야한다  , 의존 최대한 x
         // 파라미터 개수또한 최대한 제한한다 , 유지보수 관점
 
