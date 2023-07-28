@@ -141,7 +141,6 @@ public class BoardService {
             checkCategory);
 
         return allV4.map(BoardListDto::from);
-
     }
 
     //

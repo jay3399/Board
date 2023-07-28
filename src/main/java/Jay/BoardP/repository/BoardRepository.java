@@ -108,49 +108,17 @@ public class BoardRepository {
         String complex = boardSearch.getComplex();
         String nickname = boardSearch.getNickname();
 
-        String value = check.validateValue(boardSearch);
-        System.out.println("value = " + value);
 
         BooleanBuilder builder = new BooleanBuilder();
 
         builder.and(board.isDeleted.eq(false));
 
         switch (check.validateValue(boardSearch)) {
-            case "title":
-                builder.and(getTitle(title));
-                break;
-            case "content":
-                builder.and(getContent(content));
-                break;
-            case "nickname":
-                builder.and(getNickname(nickname));
-                break;
-            case "complex":
-                builder.and(getTitle(complex)).or(getContent(content));
+            case "title" -> builder.and(getTitle(title));
+            case "content" -> builder.and(getContent(content));
+            case "nickname" -> builder.and(getNickname(nickname));
+            case "complex" ->builder.and(getTitle(complex)).or(getContent(content));
         }
-
-//        if (hasText(title)) {
-//            builder.and(getTitle(title));
-//        }
-//
-//        if (hasText(content)) {
-//            builder.and(getContent(content));
-//        }
-//
-//        if (hasText(nickname)) {
-//            builder.and(getNickname(nickname));
-//        }
-//
-//        if (hasText(complex)) {
-//            builder.and(getTitle(complex))
-//                .or(getContent(complex));
-//        }
-//
-//
-//
-
-
-
 
         return adBoardRepository.findAll(builder, pageable);
 
@@ -169,40 +137,68 @@ public class BoardRepository {
 
         builder.and(board.isDeleted.eq(false));
 
+        builder.and(getCategoryCode(categoryCode));
+
+        switch (check.validateValue(boardSearch)) {
+            case "title" -> builder.and(getTitle(title));
+            case "content" -> builder.and(getContent(content));
+            case "nickname"-> builder.and(getNickname(nickname));
+            case "complex" -> builder.and(getTitle(complex).or(getContent(complex)));
+        };
+
+
+//
+//        switch (check.validateValue(boardSearch)) {
+//            case "title":
+//                builder.and(getTitle(title));
+//                break;
+//            case "content":
+//                builder.and(getContent(content));
+//                break;
+//            case "nickname":
+//                builder.and(getNickname(nickname));
+//                break;
+//            case "complex":
+//                builder.and(getTitle(complex).or(getContent(complex)));
+//                break;
+//        }
+
+
+
 /**
  *  -------------------------------V2 ----------------------------------------------------------
  */
 
-        if (check.validate(categoryCode)) {
-            builder.and(getCategoryCode(categoryCode));
-        }
-
-        if (check.validate(categoryCode,title)){
-            builder.and(getCategoryCode(categoryCode)).and(getTitle(title));
-        }
-        else if (check.validate(title)) {
-            builder.and(getTitle(title));
-        }
-
-        if (check.validate(categoryCode , content)){
-            builder.and(getCategoryCode(categoryCode)).and(getContent(content));}
-        else if (check.validate(content)) {
-            builder.and(getContent(content));
-        }
-
-        if (check.validate(categoryCode , nickname)){
-            builder.and(getCategoryCode(categoryCode)).and(getNickname(nickname));}
-        else if (check.validate(nickname)) {
-            builder.and(getNickname(nickname));
-        }
-
-        if (check.validate(categoryCode , complex)){
-            builder.and(getCategoryCode(categoryCode)).and(getTitle(complex).or(getContent(complex)));}
-        else if (check.validate(complex)) {
-            builder.and(getTitle(complex).or(getContent(complex)));
-        }
-
-
+//        if (check.validate(categoryCode)) {
+//            builder.and(getCategoryCode(categoryCode));
+//        }
+//
+//        if (check.validate(categoryCode,title)){
+//            builder.and(getCategoryCode(categoryCode)).and(getTitle(title));
+//        }
+//        else if (check.validate(title)) {
+//            builder.and(getTitle(title));
+//        }
+//
+//        if (check.validate(categoryCode , content)){
+//            builder.and(getCategoryCode(categoryCode)).and(getContent(content));}
+//        else if (check.validate(content)) {
+//            builder.and(getContent(content));
+//        }
+//
+//        if (check.validate(categoryCode , nickname)){
+//            builder.and(getCategoryCode(categoryCode)).and(getNickname(nickname));}
+//        else if (check.validate(nickname)) {
+//            builder.and(getNickname(nickname));
+//        }
+//
+//        if (check.validate(categoryCode , complex)){
+//            builder.and(getCategoryCode(categoryCode)).and(getTitle(complex).or(getContent(complex)));}
+//        else if (check.validate(complex)) {
+//            builder.and(getTitle(complex).or(getContent(complex)));
+//        }
+//
+//
         return adBoardRepository.findAll(builder, pageable);
 
 
