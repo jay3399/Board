@@ -11,19 +11,19 @@ public class CheckCategoryImpl implements CheckCategory {
   @Override
   public boolean validate(String categoryCode) {
 
-    if (!StringUtils.hasText(categoryCode)) {
-      return false;
+    if (StringUtils.hasText(categoryCode)) {
+      return true;
     }
-    return true;
+    return false;
   }
 
   @Override
   public boolean validate(String categoryCode, String value) {
 
-    if (!StringUtils.hasText(categoryCode) && StringUtils.hasText(value)) {
-      return false;
+    if (StringUtils.hasText(categoryCode) && StringUtils.hasText(value)) {
+      return true;
     }
-    return true;
+    return false;
   }
 
   @Override

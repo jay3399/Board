@@ -56,7 +56,7 @@
       aria-label="Page navigation"
   >
   <div>
-    <a th:href="@{/boards/ALL/category}">전체글|</a>
+    <a th:href="@{/boards/NON/category}">전체글|</a>
     <th:block th:each="category : ${categoryValues}">
       <a th:href="@{/boards/{categoryCode}/category (categoryCode=${category.code})}" th:text="${category.displayName}">잡담</a>
     </th:block>

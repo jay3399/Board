@@ -93,18 +93,20 @@ public class BoardController {
 
         Page<BoardListDto> boardListV2;
 
-        if (categoryCode.equals("ALL")) {
+        if (categoryCode.equals("NON")) {
             if (searchExist(boardSearch)) {
                 //카테고리 x , 보드서치 o
-                boardListV2 = boardService.getBoardList(boardSearch, pageable);
+                boardListV2 = boardService.getBoardWithoutCategory(boardSearch, pageable);
             } else {
                //카테고리 x , 보드서치 x
-                boardListV2 = boardService.getBoardWithoutSearch(pageable);
+                boardListV2 = boardService.getBoardWithoutCategory(pageable);
             }
         } else {
             // 카테고리 o , 보드서치 o // 카테고리 o 보드서치 x
-            boardListV2 = boardService.getBoardListV2(boardSearch, pageable, categoryCode);
+            boardListV2 = boardService.getBoardWithCategory(boardSearch, pageable, categoryCode);
         }
+
+
 
         model.addAttribute("pageList", boardListV2);
         model.addAttribute("categoryV", categoryCode);

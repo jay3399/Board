@@ -132,12 +132,8 @@ public class BoardService {
     }
 
 
-    public Page<BoardListDto> getBoardWithoutSearch(Pageable pageable) {
-        Page<Board> withoutSearch = boardRepository.findWithoutSearch(pageable);
-        return withoutSearch.map(BoardListDto::from);
-    }
 
-    public Page<BoardListDto> getBoardListV2(BoardSearch boardSearch, Pageable pageable, String categoryCode) {
+    public Page<BoardListDto> getBoardWithCategory(BoardSearch boardSearch, Pageable pageable, String categoryCode) {
 
         CheckCategory checkCategory = new CheckCategoryImpl();
 
@@ -150,12 +146,17 @@ public class BoardService {
 
     //
 
-    public Page<BoardListDto> getBoardList(BoardSearch boardSearch, Pageable pageable) {
-
+    public Page<BoardListDto> getBoardWithoutCategory(BoardSearch boardSearch, Pageable pageable) {
         Page<Board> allV3 = boardRepository.findAll(pageable, boardSearch, checkCategory);
         return allV3.map(BoardListDto::from);
 
     }
+
+    public Page<BoardListDto> getBoardWithoutCategory(Pageable pageable) {
+        Page<Board> withoutSearch = boardRepository.getWithoutSearch(pageable);
+        return withoutSearch.map(BoardListDto::from);
+    }
+
 
     public Page<BoardListDto> getPages(Pageable pageable) {
 

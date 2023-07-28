@@ -91,7 +91,7 @@ public class BoardRepository {
     }
 
 
-    public Page<Board> findWithoutSearch(Pageable pageable) {
+    public Page<Board> getWithoutSearch(Pageable pageable) {
         return adBoardRepository.findAllNotice(pageable);
     }
 
@@ -108,6 +108,9 @@ public class BoardRepository {
         String complex = boardSearch.getComplex();
         String nickname = boardSearch.getNickname();
 
+        String value = check.validateValue(boardSearch);
+        System.out.println("value = " + value);
+
         BooleanBuilder builder = new BooleanBuilder();
 
         builder.and(board.isDeleted.eq(false));
@@ -115,10 +118,13 @@ public class BoardRepository {
         switch (check.validateValue(boardSearch)) {
             case "title":
                 builder.and(getTitle(title));
+                break;
             case "content":
                 builder.and(getContent(content));
+                break;
             case "nickname":
                 builder.and(getNickname(nickname));
+                break;
             case "complex":
                 builder.and(getTitle(complex)).or(getContent(content));
         }
@@ -163,106 +169,42 @@ public class BoardRepository {
 
         builder.and(board.isDeleted.eq(false));
 
-
-        Map<String, Object> map = new HashMap<>();
-
-        map.put("title", builder.and(getCategoryCode(categoryCode)).and(getTitle(title)));
-        map.put("content", builder.and(getCategoryCode(categoryCode)).and(getContent(content)));
-        map.put("complex", builder.and(getCategoryCode(categoryCode)).and(getTitle(complex).or(getContent(complex))));
-        map.put("nickname", builder.and(getCategoryCode(categoryCode)).and(getNickname(nickname)));
-
-
-        //카테고리 코드 무조건 들어온다
-
-        if (check.validate(categoryCode))
-            builder.and(getCategoryCode(categoryCode));
-
-        if (check.validate(categoryCode, boardSearch)) {
-            map.get(check.validateValue(boardSearch));
-        }
-
-
-
-/**
- *  -------------------------------V3.5 ----------------------------------------------------------
- */
-
-
-
-        if (check.validate(categoryCode))
-            builder.and(getCategoryCode(categoryCode));
-
-        if (check.validate(categoryCode, title)) {
-            map.get("title");
-        } else if (check.validate(title)) {
-            builder.and(getTitle(title));
-        }
-
-        if (check.validate(categoryCode, content)) {
-            map.get("content");
-        } else if (check.validate(content)) {
-            builder.and(getContent(content));
-        }
-
-        if (check.validate(categoryCode, nickname)) {
-            map.get("nickname");
-        } else if (check.validate(nickname)) {
-            builder.and(getNickname(nickname));
-        }
-
-        if (check.validate(categoryCode, complex)) {
-            map.get("complex");
-        } else if (check.validate(complex)) {
-            builder.and(getTitle(complex).or(getContent(complex)));
-        }
-
-
-//        if (check.validate(categoryCode, boardSearch)) {
-//            map.get(check.validateValue(boardSearch));
-//        } else {
-//            switch (check.validateValue(boardSearch)) {
-//                case "title":
-//                    builder.and(getTitle(title));
-//                case "content":
-//                    builder.and(getContent(content));
-//                case "nickname":
-//                    builder.and(getNickname(nickname));
-//                case "complex":
-//                    builder.and(getTitle(complex).or(getContent(complex)));
-//            }
-//        }
-
-
 /**
  *  -------------------------------V2 ----------------------------------------------------------
  */
 
-        if (check.validate(categoryCode))
+        if (check.validate(categoryCode)) {
             builder.and(getCategoryCode(categoryCode));
+        }
 
-        if (check.validate(categoryCode,title))
+        if (check.validate(categoryCode,title)){
             builder.and(getCategoryCode(categoryCode)).and(getTitle(title));
+        }
         else if (check.validate(title)) {
             builder.and(getTitle(title));
         }
 
-        if (check.validate(categoryCode , content))
-            builder.and(getCategoryCode(categoryCode)).and(getContent(content));
+        if (check.validate(categoryCode , content)){
+            builder.and(getCategoryCode(categoryCode)).and(getContent(content));}
         else if (check.validate(content)) {
             builder.and(getContent(content));
         }
 
-        if (check.validate(categoryCode , nickname))
-            builder.and(getCategoryCode(categoryCode)).and(getNickname(nickname));
+        if (check.validate(categoryCode , nickname)){
+            builder.and(getCategoryCode(categoryCode)).and(getNickname(nickname));}
         else if (check.validate(nickname)) {
             builder.and(getNickname(nickname));
         }
 
-        if (check.validate(categoryCode , complex))
-            builder.and(getCategoryCode(categoryCode)).and(getTitle(complex).or(getContent(complex)));
+        if (check.validate(categoryCode , complex)){
+            builder.and(getCategoryCode(categoryCode)).and(getTitle(complex).or(getContent(complex)));}
         else if (check.validate(complex)) {
             builder.and(getTitle(complex).or(getContent(complex)));
         }
+
+
+        return adBoardRepository.findAll(builder, pageable);
+
 
 /**
  *  -------------------------------V1 ----------------------------------------------------------
@@ -296,10 +238,6 @@ public class BoardRepository {
 //        }
 
 
-
-
-
-        return adBoardRepository.findAll(builder, pageable);
     }
 
     private static BooleanExpression getCategoryCode(String categoryCode) {
