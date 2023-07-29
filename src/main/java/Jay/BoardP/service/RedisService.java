@@ -46,9 +46,6 @@ public class RedisService {
     public void deleteViewCountFromRedis() {
         Set<String> keys = redisTemplate.keys("viewCnt*");
 
-        Iterator<String> iterator = keys.iterator();
-
-
 
         // 분리 ,가독성 ++
         keys.parallelStream().collect(
@@ -73,6 +70,10 @@ public class RedisService {
 //                redisTemplate.delete(s);
 //            }
 //        );
+
+
+
+        //        Iterator<String> iterator = keys.iterator();
 
 //
 //        while (iterator.hasNext()) {
