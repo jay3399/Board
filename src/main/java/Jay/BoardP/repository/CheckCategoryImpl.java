@@ -43,14 +43,12 @@ public class CheckCategoryImpl implements CheckCategory {
     if (StringUtils.hasText(boardSearch.getTitle())) {
        value = "title";
     }
-
     if (StringUtils.hasText(boardSearch.getContent())) {
        value = "content";
     }
     if (StringUtils.hasText(boardSearch.getNickname())) {
        value = "nickname";
     }
-
     if (StringUtils.hasText(boardSearch.getComplex())) {
        value = "complex";
     }

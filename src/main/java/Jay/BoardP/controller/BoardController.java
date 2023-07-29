@@ -99,19 +99,6 @@ public class BoardController {
         } else boardListV2 = boardService.getBoardWithCategory(boardSearch, pageable, categoryCode);
 
 
-
-//        if (categoryCode.equals("NON")) {
-//            if (searchExist(boardSearch)) {
-//                boardListV2 = boardService.getBoardWithoutCategory(boardSearch, pageable);
-//            } else {
-//                boardListV2 = boardService.getBoardWithoutCategory(pageable);
-//            }
-//        } else {
-//            boardListV2 = boardService.getBoardWithCategory(boardSearch, pageable, categoryCode);
-//        }
-
-
-
         model.addAttribute("pageList", boardListV2);
         model.addAttribute("categoryV", categoryCode);
         model.addAttribute("boardSearch", boardSearch);
@@ -134,7 +121,7 @@ public class BoardController {
 
         String key = BOARDCOUNTPERDAY;
 
-        //2분마다 , 스케줄이용 viewCnt 값을 디비에 반영
+        //3분마다 , 스케줄이용 viewCnt 값을 디비에 반영
         if (redisService.isFirstRequest(ipAddress, boardId)) {
             boardService.viewCountWithRedisWithFirst(boardId);   // viewCnt
             redisService.writeRequest(ipAddress, boardId);   // 중복방지

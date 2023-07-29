@@ -208,8 +208,6 @@ public class BoardService {
                 Duration.ofMinutes(5)
             );
         }
-
-
     }
 
     public void viewCountWithRedisWithFirst(Long boardId) {
@@ -224,7 +222,6 @@ public class BoardService {
                 boardRepository.getView(boardId),
                 Duration.ofMinutes(5)
             );
-
             valueOperations.increment(key);
             // 삭제안됌 , 그대로 키가져와서 value 값 up !!!!
         } else{

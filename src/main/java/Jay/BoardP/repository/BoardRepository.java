@@ -144,7 +144,10 @@ public class BoardRepository {
             case "content" -> builder.and(getContent(content));
             case "nickname"-> builder.and(getNickname(nickname));
             case "complex" -> builder.and(getTitle(complex).or(getContent(complex)));
-        };
+        }
+
+        return adBoardRepository.findAll(builder, pageable);
+
 
 
 //
@@ -199,7 +202,6 @@ public class BoardRepository {
 //        }
 //
 //
-        return adBoardRepository.findAll(builder, pageable);
 
 
 /**
@@ -232,7 +234,6 @@ public class BoardRepository {
 //        } else if (hasText(complex)) {
 //            builder.and(getTitle(complex).or(getContent(complex)));
 //        }
-
 
     }
 
